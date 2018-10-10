@@ -14,3 +14,13 @@ npm i node-red-contrib-zeromq
 ```bash
 npm i biocad/node-red-contrib-monique
 ```
+
+## Примеры
+
+Перед запуском примеров необходимо локально запустить scheduler – "одно место" (документация [mq](https://github.com/biocad/mq))
+
+Примеры доступны через меню: Import — Examples — monique
+
+#### Пример "Radio"
+
+Пример отправки и получения сообщения через "одно место"
