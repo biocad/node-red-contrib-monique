@@ -1,0 +1,140 @@
+[
+    {
+        "id": "ba0e15b8.e3f758",
+        "type": "tab",
+        "label": "Radio",
+        "disabled": false,
+        "info": "Пример \"Радио\""
+    },
+    {
+        "id": "bd9021fd.60611",
+        "type": "zeromq in",
+        "z": "ba0e15b8.e3f758",
+        "name": "MQ",
+        "topic": "",
+        "fields": "topic,payload",
+        "server": "tcp://127.0.0.1:9000",
+        "output": "buffer",
+        "isserver": false,
+        "intype": "pull",
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "5de142f1.aa3ffc"
+            ]
+        ]
+    },
+    {
+        "id": "6b015030.a62ee",
+        "type": "debug",
+        "z": "ba0e15b8.e3f758",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data",
+        "x": 670,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5de142f1.aa3ffc",
+        "type": "from monique",
+        "z": "ba0e15b8.e3f758",
+        "name": "MoniQue",
+        "mqmetrica": false,
+        "mqlogs": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "6b015030.a62ee"
+            ]
+        ]
+    },
+    {
+        "id": "9f7c0cc7.15f29",
+        "type": "catch",
+        "z": "ba0e15b8.e3f758",
+        "name": "",
+        "scope": null,
+        "x": 280,
+        "y": 40,
+        "wires": [
+            [
+                "50f2157b.86349c"
+            ]
+        ]
+    },
+    {
+        "id": "50f2157b.86349c",
+        "type": "debug",
+        "z": "ba0e15b8.e3f758",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 530,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ddebe6ca.4692b8",
+        "type": "inject",
+        "z": "ba0e15b8.e3f758",
+        "name": "",
+        "topic": "",
+        "payload": "Hello there!",
+        "payloadType": "str",
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "a8d6926b.7a943"
+            ]
+        ]
+    },
+    {
+        "id": "a8d6926b.7a943",
+        "type": "to monique",
+        "z": "ba0e15b8.e3f758",
+        "name": "MoniQue",
+        "mqcreator": "radio-speaker",
+        "mqencoding": "json",
+        "mqtype": "data",
+        "mqspec": "example_radio",
+        "mqmetrica": false,
+        "mqlogs": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "3b1fbee3.f19012"
+            ]
+        ]
+    },
+    {
+        "id": "3b1fbee3.f19012",
+        "type": "zeromq out",
+        "z": "ba0e15b8.e3f758",
+        "name": "MQ",
+        "topic": "",
+        "fields": "topic,payload",
+        "server": "tcp://127.0.0.1:9000",
+        "isserver": false,
+        "intype": "push",
+        "x": 630,
+        "y": 200,
+        "wires": []
+    }
+]

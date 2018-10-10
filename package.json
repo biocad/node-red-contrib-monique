@@ -1,0 +1,21 @@
+{
+  "license" : "BSD-3-Clause",
+  "name": "node-red-contrib-monique",
+  "version": "1.0.0",
+  "description": "Node-RED MoniQue node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Andrey Minin"
+  },
+  "node-red": {
+    "nodes": {
+      "monique": "monique/monique.js"
+    }
+  },
+  "dependencies": {
+    "crypto-extra": "^0.4.0",
+    "msgpack5": "^4.2.0"
+  }
+}

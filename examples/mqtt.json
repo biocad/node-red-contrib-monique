@@ -1,0 +1,152 @@
+[
+    {
+        "id": "3a3681a4.4fd8ae",
+        "type": "tab",
+        "label": "MQTT — MQ",
+        "disabled": false,
+        "info": "Пример \"MQTT\""
+    },
+    {
+        "id": "dfd3bb5d.f71e78",
+        "type": "zeromq out",
+        "z": "3a3681a4.4fd8ae",
+        "name": "MQ",
+        "topic": "",
+        "fields": "topic,payload",
+        "server": "tcp://127.0.0.1:9000",
+        "isserver": false,
+        "intype": "push",
+        "x": 630,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7d9c22ad.c4d99c",
+        "type": "zeromq in",
+        "z": "3a3681a4.4fd8ae",
+        "name": "MQ",
+        "topic": "",
+        "fields": "topic,payload",
+        "server": "tcp://127.0.0.1:9001",
+        "output": "buffer",
+        "isserver": false,
+        "intype": "sub",
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "5f1f5f69.5d"
+            ]
+        ]
+    },
+    {
+        "id": "9b7749fe.f53db8",
+        "type": "debug",
+        "z": "3a3681a4.4fd8ae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.data",
+        "x": 670,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b48cea45.9c1648",
+        "type": "to monique",
+        "z": "3a3681a4.4fd8ae",
+        "name": "MoniQue",
+        "mqcreator": "mqtt",
+        "mqencoding": "json",
+        "mqtype": "data",
+        "mqspec": "example_mqtt",
+        "mqmetrica": false,
+        "mqlogs": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "dfd3bb5d.f71e78"
+            ]
+        ]
+    },
+    {
+        "id": "5f1f5f69.5d",
+        "type": "from monique",
+        "z": "3a3681a4.4fd8ae",
+        "name": "MoniQue",
+        "mqmetrica": false,
+        "mqlogs": false,
+        "outputs": 1,
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "9b7749fe.f53db8"
+            ]
+        ]
+    },
+    {
+        "id": "40a7141d.05bcdc",
+        "type": "json",
+        "z": "3a3681a4.4fd8ae",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "b48cea45.9c1648"
+            ]
+        ]
+    },
+    {
+        "id": "a59ccb50.e87128",
+        "type": "catch",
+        "z": "3a3681a4.4fd8ae",
+        "name": "",
+        "scope": null,
+        "x": 280,
+        "y": 40,
+        "wires": [
+            [
+                "a433680f.1b5548"
+            ]
+        ]
+    },
+    {
+        "id": "a433680f.1b5548",
+        "type": "debug",
+        "z": "3a3681a4.4fd8ae",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 530,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "87aa66bb.210248",
+        "type": "mqtt in",
+        "z": "3a3681a4.4fd8ae",
+        "name": "",
+        "topic": "spb/+/status",
+        "qos": "0",
+        "broker": "",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "40a7141d.05bcdc"
+            ]
+        ]
+    }
+]

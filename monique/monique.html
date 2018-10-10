@@ -1,0 +1,196 @@
+<script type="text/x-red" data-template-name="to monique">
+    <div class="form-row">
+        <label for="node-input-creator"><i class="fa fa-bookmark-o"></i>  Creator</label>
+        <input type="text" id="node-input-mqcreator" placeholder="00000000-0000-0000-0000-000000000000">
+    </div>
+    <div class="form-row">
+        <label for="node-input-mqencoding"><i class="fa fa-code"></i> Encoding</label>
+        <select id="node-input-mqencoding">
+            <option value="msgpack">MessagePack</option>
+            <option value="json">JSON</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mqtype"><i class="fa fa-clone"></i> Type</label>
+        <select id="node-input-mqtype">
+            <option value="data">data</option>
+            <option value="config">config</option>
+            <option value="result">result </option>
+            <option value="error">error</option>
+        </select>
+    </div>
+	<div class="form-row">
+        <label for="node-input-mqspec"><i class="fa fa-circle-thin"></i> Spec</label>
+        <input type="text" id="node-input-mqspec" placeholder="mqtt">
+    </div>
+    <hr align="middle"/>
+    <div class="form-row">
+        <label for="node-input-mqmetrica"><i class="fa fa-bar-chart"></i> Metric</label>
+        <label for="node-input-mqmetrica" style="width:70%">
+        <input type="checkbox" id="node-input-mqmetrica" style="display:inline-block; width:22px; vertical-align:baseline;">
+        </label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mqlogs"><i class="fa fa-exclamation-triangle"></i> Logging</label>
+        <label for="node-input-mqlogs" style="width:70%">
+        <input type="checkbox" id="node-input-mqlogs" style="display:inline-block; width:22px; vertical-align:baseline;">
+        </label>
+        <input type="hidden" id="node-input-outputs" style="width: 60px;" value="1">
+    </div>
+    <hr align="middle"/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="to monique">
+    <p>to MoniQue node</p>
+
+    <h3>Inputs</h3>
+      <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">number | string | object</span>
+        </dt>
+        <dd> the payload of the message to MoniQue publish. </dd>
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd> the MoniQue topic (tag) to publish to.</dd>
+      </dl>
+
+    <h3>Outputs</h3>
+      <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">object</span></dt>
+                 <dd>the standard output of the MoniQue message.</dd>
+             </dl>
+         </li>
+         <li>Standard error
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the error.</dd>
+             </dl>
+         </li>
+      </ol>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('to monique',{
+        category: 'MoniQue',
+		color: '#32b561',
+        paletteLabel: "MoniQue",
+        defaults: { 
+            name: {value:"MoniQue"},
+            mqcreator: {value:"", required:true},
+            mqencoding: {value:"json", required:true},
+            mqtype: {value:"data", required:true},
+			mqspec: {value:"", required:true},
+			mqmetrica: {value:false},
+            mqlogs: {value:false},
+            outputs: {value:1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "mq.svg",
+		align: "right",
+        label: function() {
+            return this.name||"MoniQue";
+        },
+        labelStyle: function() {
+            return this.name?"node_label":"";
+        },
+        oneditprepare: function() {
+            $( "#node-input-mqlogs" ).on('change', () => {
+            if ( $("#node-input-mqlogs").is(':checked') ) {
+              $("#node-input-outputs").val(2);
+            } else {
+              $("#node-input-outputs").val(1);
+            }
+          });
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="from monique">
+    <div class="form-row">
+        <label for="node-input-mqmetrica"><i class="fa fa-bar-chart"></i> Metric</label>
+        <label for="node-input-mqmetrica" style="width:70%">
+        <input type="checkbox" id="node-input-mqmetrica" style="display:inline-block; width:22px; vertical-align:baseline;">
+        </label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mqlogs"><i class="fa fa-exclamation-triangle"></i> Logging</label>
+        <label for="node-input-mqlogs" style="width:70%">
+        <input type="checkbox" id="node-input-mqlogs" style="display:inline-block; width:22px; vertical-align:baseline;">
+        </label>
+        <input type="hidden" id="node-input-outputs" style="width: 60px;" value="1">
+    </div>
+    <hr align="middle"/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="from monique">
+   <p>from MoniQue node</p>
+
+       <h3>Inputs</h3>
+      <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">buffer</span>
+        </dt>
+        <dd> the payload of the message from MoniQue subscribe. </dd>
+        <dt class="optional">topic <span class="property-type">string | buffer</span></dt>
+        <dd> the MoniQue topic (tag)</dd>
+      </dl>
+
+    <h3>Outputs</h3>
+      <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">object</span></dt>
+                 <dd>the standard output of the MoniQue message.</dd>
+             </dl>
+         </li>
+         <li>Standard error
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the error.</dd>
+             </dl>
+         </li>
+      </ol>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('from monique',{
+        category: 'MoniQue',
+		color: '#32b561',
+        paletteLabel: "MoniQue",
+        defaults: {
+            name: {value:"MoniQue"},
+			mqmetrica: {value:false},
+            mqlogs: {value:false},
+            outputs: {value:1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "mq.svg",
+        label:  function() {
+            return this.name||"MoniQue";
+        },
+        labelStyle: function() {
+            return this.name?"node_label":"";
+        },
+        oneditprepare: function() {
+            $( "#node-input-mqlogs" ).on('change', () => {
+            if ( $("#node-input-mqlogs").is(':checked') ) {
+              $("#node-input-outputs").val(2);
+            } else {
+              $("#node-input-outputs").val(1);
+            }
+          });
+        }
+    });
+</script>
+
